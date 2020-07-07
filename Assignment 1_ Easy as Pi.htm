@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0046)http://cs3.calstatela.edu/~cguo/CS5035/A1.html -->
+<html xmlns="https://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<meta name="description" content="CS5035 Topics in Functional Programming">
+	<link rel="stylesheet" type="text/css" href="./Assignment 1_ Easy as Pi_files/notes.css" title="Variant Stream" media="screen,projection">
+	<title>Assignment 1: Easy as Pi</title>
+</head>
+
+<body>
+<div id="wrap">	
+	<div id="content">
+		<div class="post">
+
+<h2>Assignment 1: Easy as Pi</h2>
+
+<p>
+<strong style="color:red">The assignment is due on February 12 (Wednesday) at 11:59 PM.</strong>
+</p>
+
+<h3>Introduction</h3>
+
+<p>
+The goal of this assignment is to introduce you to the basics of OCaml programming.
+Along the way, you'll discover a couple of algorithms for estimating the value of pi.
+</p>
+
+
+<h3>Part 1: Reading Tasks</h3>
+ <ul>
+ <li>Read the lecture notes on <a href="http://cs3.calstatela.edu/~cguo/CS5035/LecNotes_01_Functional_Basics.html">OCaml Programming Basics</a> and <a href="http://cs3.calstatela.edu/~cguo/CS5035/LecNotes_02_Type_Checking.html">Type Checking</a> </li>
+ </ul>
+
+<h3>Part 2: Setting up your Development Environment</h3>
+
+<p>
+  Install and configure your OCaml development environment. 
+  Once you have OCaml installed and your development tools set up,
+  now you just have to learn how to write useful programs!
+</p>
+
+<h3>Part 3: Assignment Basics</h3>
+
+<p> To get started, download the <a href="http://cs3.calstatela.edu/~cguo/CS5035/code/a1.ml"><code>a1.ml</code></a> file,
+which is the main file for your assignment. Look inside the file to find a series of short problems you should solve.
+
+</p><p>
+Directly modify the downloaded <code>a1.ml</code> file to solve the problems.
+You only need to submit the modified <code>a1.ml</code> file to CSNS.
+
+</p><p>
+After solving all problems and before submission, make sure that
+your modified <code>a1.ml</code> file does NOT have both compiling errors and running errors.
+You may check your submission as follows.
+
+</p><ul>
+	<li> Open the command line terminal and change to the directory of <code>a1.ml</code> file.
+	
+	</li><li> Compile <code>a1.ml</code> by typing:
+<pre>$ ocamlc -o a1.o a1.ml
+</pre>
+	Make sure there is NO compiling error.
+	If you haven't touched any of the code inside <code>a1.ml</code> yet, you should see 
+	the following error message printed out:
+<pre>File "a1.ml", line 61, characters 13-16:
+61 | let prob2a : ???  = let greet y = "Hello " ^ y in greet "World!";;
+                  ^^^
+Error: Syntax error
+</pre>
+
+	</li><li> Run the executable we have created, i.e. <code>a1.o</code>, by typing:
+<pre>$ ./a1.o
+</pre>
+	for Unix-like systems or the following command for Windows systems
+<pre>a1.o
+</pre>
+	Make sure there is NO running error, such as:
+<pre>Fatal error: exception Failure("undefined")
+</pre>
+which indicates the <code>Failure</code> exception has been raised.  
+Follow the instructions in <code>a1.ml</code> to eliminate the error
+and complete the assignment.
+<p></p>
+</li></ul>
+
+
+    <h3>Important notes</h3>
+    <ol>
+      <li><b>Compilation errors:</b>
+
+        Your solution <em>must compile</em>.  If you omit problems
+        (you shouldn't!), leave the corresponding definitions
+        commented out so that they will not confuse our automated
+        grader as it checks the other problems.  If you are having
+        difficulty getting your code to compile, please visit office
+        hours!
+
+      </li><li><b>Testing:</b> How should you write tests?  At some point
+        during the semester, we may talk about testing in more depth
+        than you saw in the first lecture.  For now, we will mostly
+        leave testing up to you (though please follow the instructions
+        in the file and write some tests where we ask).  Follow the
+        good practices you have learned in earlier CS courses.
+
+      </li><li><b>Auxiliary functions:</b> Feel free to use them when they
+        make your code cleaner, more modular, and/or easier to test
+        — that's what functions are for!  Just make sure that if
+        we name a particular function that you have to write (either
+        in the assignment text, or in a template file), that you
+        preserve its name so that our automated grader can find it.
+        </li>
+
+      <li><b>Style:</b> Finally, please pay attention to style.  Take
+        the extra time to think about the problems and find the most
+        elegant solutions before coding them up.  Many of the problems
+        in this assignment are somewhat artificial.  Nevertheless,
+        think about your coding style where appropriate (and
+        certainly, thinking about style in the final question
+        computing pi is appropriate).
+        For reference, consult the <a href="http://cs3.calstatela.edu/~cguo/CS5035/OCaml_Style_Guide.html">
+        style guide</a>.  In addition, you are also encouraged to bring
+        style questions to the course staff at office hours.
+		
+        </li><li><b>Line limit:</b> One important element of style is
+        having at most 80 characters per line.  This is important for
+        our ability to read your code.  </li> </ol>
+
+      <h3>Submission</h3>
+	  <p>Submit your assignment, i.e., the modified <code>a1.ml</code>
+	  file, in CSNS.
+
+      </p><p>It is <b>very important</b> that you compile and test your
+      code by running the commands shown in Part 3.
+	  These steps will check that your code as a whole
+      compiles and that the tests pass. <b style="color:red">Submissions that do
+      not compile will earn very few points!<b></b></b></p><b style="color:red"><b>
+
+	<br>
+</b></b></div><b style="color:red"><b>
+
+</b></b></div></div></body></html>
