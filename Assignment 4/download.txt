@@ -1,0 +1,244 @@
+CS5035 Assignment 4 [100 POINTS]
+------------------------------------------------------------
+(*** CS5035 Assignment 4: Program Correctness ***)
+(*** Harshil Patel ***)
+
+
+Part 1 [15 POINTS]:
+----------------------
+
+Prove that for all a, b, c : complex,
+
+cadd a (cadd b c) == cadd (cadd a b) c
+
+Proof:
+cadd a (cadd b c)                                                     [LHS]
+ == cadd a (let (b1, b2) = b in let (c1, c2) = c 
+ in (b1+c1, b2+c2))                                               [eval, alpha]
+ == let (a1, a2) = a in let (bc1, bc2) = (let (b1, b2) = b in 
+ let (c1, c2) = c in (b1+c1, b2+c2)) in (a1+bc1, a2+bc2)          [eval, alpha]
+ == (a1+b1+c1, a2+b2+c2)                                          [eval, alpha]
+ == let (x1, y1) = (let (a1, a2) = a in let (b1, b2) = b 
+ in (a1+b1, a2+b2)) in let (c1, c2) = c in (x1+c1, y1+c2) [reverse eval, alpha]
+ == cadd (cadd a b) c                                     [reverse eval, alpha] 
+
+
+
+
+QED!
+
+
+Part 2 [15 POINTS]: 
+----------------------
+
+Prove that for all integer lists xs and ys,
+max (maxs xs) (maxs ys) == (maxs (append xs ys)).
+
+Clearly justify each step of your proof.
+
+Proof:  By induction on the structure of the list xs.
+
+case xs == []:
+
+To show:max (maxs []) (maxs ys) == (maxs (append [] ys))
+Proof:
+ max (maxs []) (maxs ys)                                [LHS]
+ == max (min_int) (maxs ys)                               [eval]
+ == (maxs ys)                [min_int, maxs is a total function]
+ == maxs (append [] ys)                           [reverse eval]
+
+
+
+
+
+
+case xs == hd::tail:
+
+IH:  max (maxs tail) (maxs ys) == (maxs (append tail ys)) 
+
+To show:   max (maxs hd::tail) (maxs ys) == (maxs (append (hd::tail) ys))
+
+Proof:
+ max (maxs xs) (maxs ys)                                        [LHS]
+ == max (maxs hd::tail) (maxs ys)                           [congruence]
+ == max (max hd (maxs tail)) (maxs ys)                            [eval]
+ == max hd (max (maxs tail) (maxs ys))                   [associativity]
+ == max hd (maxs (append tail ys))                                  [IH]
+ == maxs (hd::append tail ys) [reverse eval, append is a total function]
+ == maxs (append (hd::tail) ys)                           [reverse eval]
+
+
+
+QED!
+
+
+Part 3 [40 POINTS]: 
+----------------------
+
+(a) [15 POINTS] Prove that for all integer lists l, bump1 l == bump2 l.
+
+Proof: 
+By induction on the structure of list l.
+case l == []: 
+
+To show: bump1 [] == bump2 []
+
+Proof:
+
+    bump1 []                 [LHS]
+ == map (fun x -> x + 1) [] [eval]
+ == []                      [eval]
+ == bump2 []        [reverse eval]
+
+case l == hd::tail:
+
+IH: bump1 tail == bump2 tail
+
+To show: bump1 hd::tail == bump2 hd::tail
+
+Proof:
+
+    bump1 hd::tail                     [LHS]
+ == map (fun x -> x+1) hd::tail       [eval]
+ == (hd+1)::(map (fun x -> x+1) tail) [eval]
+ == bump2 hd::tail            [reverse eval]
+
+
+
+QED!
+
+
+(b) [15 POINTS] Prove that for all integer lists l, bump1 l == bump3 l.
+
+Proof:
+By induction on the structure of list l.
+
+case l == []:
+
+To show: bump1 [] = bump3 []
+
+Proof: 
+
+    bump1 []          [LHS]
+ == []               [eval]
+ == bump3 [] [reverse eval]
+
+case l == hd::tail:
+
+IH: bump1 tail = bump3 tail
+
+To show: bump1 hd::tail == bump3 hd::tail
+
+Proof:
+
+    bump1 hd::tail                       [LHS]
+ == map (fun x -> x+1) hd::tail         [eval]
+ == (hd+1)::(map (fun x -> x+1) tail)   [eval]
+ == (hd+1)::(bump1 tail)        [reverse eval]
+ == (hd+1)::(bump3 tail)                  [IH]
+ == bump3 hd::tail              [reverse eval]
+
+
+
+
+
+QED!
+
+
+(c) [10 POINTS] In one sentence, what's the big difference between parts (a) and (b)?
+
+Part (a) has two different applications of the same underlying function
+(i.e. map) while part (b) has an application of map and an application
+of fold.
+
+
+
+Part 2.4 [30 POINTS]:
+----------------------
+
+Either prove or disprove each of the following. You will do any proofs using
+induction on lists and you will disprove any false statement by providing a
+counter-example to the claim.  When you do a proof, be sure to use the 
+standard template for list proofs.
+
+(a) [15 POINTS] For all l : ('a * 'b) list, zip(unzip l) == l.
+
+Proof:  By induction on the structure of list l.
+
+case l = []:
+
+To show: zip(unzip []) == []
+
+Proof: 
+
+    zip(unzip [])  [LHS]
+ == zip(([], [])) [eval]
+ == []       [eval, RHS]
+
+case l = hd::tail:
+
+IH: zip(unzip(tail)) = tail
+
+To show: zip(unzip (hd::tail)) = hd::tail
+
+Proof:
+
+    zip(unzip (hd::tail))                                             [LHS]
+ == zip(match hd::tail with
+          | [] -> ([],[])
+          | (x,y)::tail -> 
+             let (xs,ys) = unzip tail in
+             (x::xs, y::ys))                                         [eval]
+ == zip(x::xs, y::ys)                                                [eval]
+ == let (xs', ys') = match xs with
+    	| [] -> ([],[])
+    	| (x,y)::tail -> 
+	let (xs,ys) = unzip tail in
+      	  (x::xs, y::ys)
+    in
+    match (xs', ys') with
+       | ([], _) -> []
+       | (_, []) -> []
+       | (x'::xrest, y'::yrest) -> 
+         (x', y')::zip(xrest, yrest)                          [eval, alpha]
+ 
+ == let (xs, ys) = unzip tail in
+    let (xs', ys') = match xs with
+      | [] -> ([], [])
+      | (x, y)::tail -> (x::xs, y::ys)
+    in
+    match (xs', ys') with
+      | ([], _) -> []
+      | (_, []) -> []
+      | (x'::xrest, y'::yrest) -> 
+        (x', y')::zip(xrest, yrest)                [re-write let statements
+                                      i.e. let x = (let y = e1 in e2) in e3 
+                                                             is the same as 
+                                             let y = e1 in let x = e2 in e3]
+ 
+ == (x', y')::zip(xrest, yrest)                                       [eval]
+ == (x', y')::zip(xs, ys)               [congruence; xs=xrest and ys = rest]
+ == (x', y')::zip(unzip(tail))                                [reverse eval]
+ == (x, y)::zip(unzip(tail))                 [congruence; x' = x and y' = y]
+ == hd::zip(unzip(tail))                                      [reverse eval]
+ == hd::tail              
+
+
+
+
+
+(b) [15 POINTS] For all l1 : 'a list, l2 : 'b list, unzip(zip (l1,l2)) == (l1,l2).
+
+
+Proof: I'll disprove this statement by providing a counter-example. 
+
+Let l1 = [] and l2 = [1]
+
+    unzip(zip(l1, l2)) [LHS]
+ == unzip([])         [eval]
+ == ([], [])          [eval]
+ != ([], [1])          [RHS]
+
+Thus, unzip(zip(l1,l2)) != (l1, l2) for all l1: 'a list, l2: 'b list.
+
+
